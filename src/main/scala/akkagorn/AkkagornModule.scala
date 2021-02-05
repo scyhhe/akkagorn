@@ -13,15 +13,16 @@ import sttp.tapir.server.akkahttp._
 import scala.io.StdIn
 import scala.concurrent.Future
 import com.typesafe.config.ConfigFactory
+import akka.actor.typed.ActorRef
 
 object AkkagornModule extends App {
 
   private val config = ConfigFactory.load()
+  private implicit val system = ActorSystem(Behaviors.empty, "akkagorn-system")
+  private implicit val executionContext = system.executionContext
 
   def startServer(): Unit = {
-    implicit val system = ActorSystem(Behaviors.empty, "akkagorn-system")
     // needed for the future flatMap/onComplete in the end
-    implicit val executionContext = system.executionContext
 
     val getHello =
       AkkaHttpServerInterpreter.toRoute(Endpoints.helloEndpoint)(_ =>
