@@ -4,8 +4,10 @@
 
 "My friends, you subscribe to no one" 
 - Akkagorn
+
 ##  Design doc
 A quick design doc to explain the project
+
 ### Overview
 This projects goal is to have a server that can be used for a multitude of different client applications. 
 It should be possible to send messages to the server to be distributed to subscribed clients.

@@ -29,8 +29,6 @@ object AkkagornModule extends App {
         Future(Right("<h1>Say hello to akka-http</h1>"))
       )
 
-    // val helloConf = config.getString("akkagorn.hello")
-
     val routeAggregate = getHello
 
     val bindingFuture =
