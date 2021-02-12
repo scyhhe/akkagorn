@@ -1,3 +1,3 @@
-package akkagorn.server
+package akkagorn.write
 
 class AkkagornBehavior 
