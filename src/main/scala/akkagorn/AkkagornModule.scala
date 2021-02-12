@@ -22,7 +22,6 @@ object AkkagornModule extends App {
   private implicit val executionContext = system.executionContext
 
   def startServer(): Unit = {
-    // needed for the future flatMap/onComplete in the end
 
     val getHello =
       AkkaHttpServerInterpreter.toRoute(Endpoints.helloEndpoint)(_ =>
