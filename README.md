@@ -2,9 +2,6 @@
 ![Akkagorn](https://i.imgflip.com/4wsxwi.jpg)
 
 
-"My friends, you subscribe to no one" 
-- Akkagorn
-
 ##  Design doc
 A quick design doc to explain the project
 
