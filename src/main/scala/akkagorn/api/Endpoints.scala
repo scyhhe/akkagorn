@@ -14,4 +14,7 @@ object Endpoints {
 
   val helloEndpoint =
     baseEndpoint.get.in("hello").out(htmlBodyUtf8)
+
+  val register = 
+    baseEndpoint.put.in("register").out(htmlBodyUtf8)
 }
