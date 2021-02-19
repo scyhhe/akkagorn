@@ -1,5 +1,5 @@
 package akkagorn.api
 
-import akkagorn.server.model._
+import akkagorn.model._
 
-final case class PublishDto(subscriber: Subscriber, topic: Topic, message: Message)
+final case class PublishRequest(topic: Topic, message: Message)

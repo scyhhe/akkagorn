@@ -1,4 +1,4 @@
-package akkagorn.server.model
+package akkagorn.model
 
 import akkagorn.model.TopicIdentifier
 

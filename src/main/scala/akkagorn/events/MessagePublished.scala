@@ -1,5 +1,5 @@
 package akkagorn.events
 
-import akkagorn.server.model._
+import akkagorn.model._
 
-final case class MessagePublished(subscriber: Subscriber, topic: Topic, message: Message)
+final case class MessagePublished(queue: Queue, topic: Topic, message: Message)
