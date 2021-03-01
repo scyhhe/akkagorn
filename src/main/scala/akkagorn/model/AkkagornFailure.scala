@@ -1,9 +1,12 @@
 package akkagorn.model
 
 object AkkagornFailure {
-    sealed trait RegisterSubscriberFailure
-    object RegisterSubscriberFailure {}
+  sealed trait RegisterSubscriberFailure
+  case object RegisterSubscriberFailure extends RegisterSubscriberFailure
 
-    sealed trait PublishMessageFailure
-    object PublishMessageFailure {}
+  sealed trait PublishMessageFailure
+  case object PublishMessageFailure extends PublishMessageFailure
+
+  sealed trait CreateTopicFailure
+  case object CreateTopicFailure extends CreateTopicFailure
 }

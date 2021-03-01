@@ -1,18 +1,28 @@
 package akkagorn.server
 
 import akkagorn.api._
+import cats.data.EitherT
+import scala.concurrent.ExecutionContext
+import scala.concurrent.Future
+import sttp.model.StatusCode
 
-// sealed trait HeKnowsWhatsUp {
-//   private def isGayCondition = if (Random.between(0, 1) > 0.5) true else false
-
-//   def authenticate(possiblyGayPersonName: String) =
-//     java.lang.Boolean.valueOf("true").equals(isGayCondition.toString())
-// }
-
-class ManagementController[F[_]](service: ManagementService[F]) {
+class ManagementController(service: ManagementService)(implicit
+    ec: ExecutionContext
+) {
   def createTopic(
       request: CreateTopicRequest
-  ): F[Either[ApiError, CreateTopicResponse]] = {
-    ???
+  ): Future[Either[(StatusCode, ApiError), CreateTopicResponse]] = {
+    // authorize
+
+    EitherT(service.createTopic(request.name))
+      .bimap(
+        _ =>
+          (
+            StatusCode.BadRequest,
+            ApiError(s"Could not create Topic=${request.name}")
+          ),
+        topicId => CreateTopicResponse(topicId, request.name)
+      )
+      .value
   }
 }
