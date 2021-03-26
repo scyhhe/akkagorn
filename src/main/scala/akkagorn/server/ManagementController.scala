@@ -1,7 +1,6 @@
 package akkagorn.server
 
 import akkagorn.api._
-import cats.data.EitherT
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 import sttp.model.StatusCode

@@ -1,13 +1,13 @@
 import sbt._
 
 object Dependencies {
-  private val akkaVersion = "2.6.12"
+  private val akkaVersion = "2.6.13"
   private val akkaHttpVersion = "10.2.3"
   private val catsVersion = "2.3.0"
-  private val tapirVersion = "0.17.9"
+  private val tapirVersion = "0.17.18"
   private val circeVersion = "0.13.0"
 
-  val core = Def.setting {
+  val root = Def.setting {
     Seq(
       "com.softwaremill.sttp.tapir" %% "tapir-core" % tapirVersion,
       "com.softwaremill.sttp.tapir" %% "tapir-akka-http-server" % tapirVersion,

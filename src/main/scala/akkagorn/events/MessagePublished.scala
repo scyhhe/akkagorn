@@ -1,5 +1,4 @@
 package akkagorn.events
 
-import akkagorn.model._
 
 final case class MessagePublished()
