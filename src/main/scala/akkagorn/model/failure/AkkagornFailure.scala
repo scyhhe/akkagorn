@@ -1,4 +1,4 @@
-package akkagorn.model
+package akkagorn.model.failure
 
 object AkkagornFailure {
   sealed trait RegisterSubscriberFailure

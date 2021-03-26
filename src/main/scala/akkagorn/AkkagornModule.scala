@@ -3,7 +3,6 @@ package akkagorn
 import akkagorn.api.Endpoints
 
 import akka.actor.typed.ActorSystem
-import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl._
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
@@ -17,8 +16,10 @@ import akka.actor.typed.ActorRef
 import akkagorn.write.AkkagornBehaviorRoot
 import akkagorn.write.AkkagornCommand
 import akkagorn.server._
-import akkagorn.api.CreateTopicRequest
-import akkagorn.model.TopicName
+import akkagorn.api._
+import akkagorn.model._
+import akka.http.scaladsl.server.Route
+
 object AkkagornModule extends App {
 
   private val config = ConfigFactory.load()
@@ -27,6 +28,7 @@ object AkkagornModule extends App {
   implicit val executionContext = system.executionContext
 
   val managementService: ManagementService = new ManagementService(system.ref)
+
   private val managementController: ManagementController =
     new ManagementController(
       managementService
@@ -34,14 +36,21 @@ object AkkagornModule extends App {
 
   def startServer(): Unit = {
 
-    val createTopicRoute =
-      AkkaHttpServerInterpreter.toRoute(Endpoints.createTopic)(_ =>
-        managementController.createTopic(
-          CreateTopicRequest(TopicName("TEST TOPIC"))
+    val createFeedCategoryRoute: Route =
+      AkkaHttpServerInterpreter.toRoute(Endpoints.createFeedCategory)(_ =>
+        managementController.createFeedCategory(
+          CreateFeedCategoryRequest(FeedCategory("TEST TOPIC"))
         )
       )
 
-    val routeAggregate = createTopicRoute
+    val createFeedRoute: Route =
+      AkkaHttpServerInterpreter.toRoute(Endpoints.createFeed)(_ =>
+        managementController.createFeed(
+          CreateFeedRequest(FeedId("test"), FeedCategory("TEST TOPIC"))
+        )
+      )
+
+    val routeAggregate: Route = concat(createFeedCategoryRoute, createFeedRoute)
 
     val bindingFuture =
       Http().newServerAt("localhost", 8080).bind(routeAggregate)

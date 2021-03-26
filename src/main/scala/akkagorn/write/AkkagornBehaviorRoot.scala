@@ -6,8 +6,8 @@ import akka.actor.typed.Behavior
 import cats.syntax.all._
 import akkagorn.write.AkkagornCommand._
 import akka.actor.typed.scaladsl.Behaviors
-import akkagorn.model.AkkagornFailure
-import akkagorn.model.TopicId
+import akkagorn.model.failure.AkkagornFailure
+import akkagorn.model.FeedId
 
 object AkkagornBehaviorRoot {
   def apply(): Behavior[AkkagornCommand] =
@@ -22,7 +22,7 @@ class AkkagornBehaviorRoot(context: ActorContext[AkkagornCommand])
     msg match {
       case CreateTopic(name, replyTo) =>
         // "persist" topic
-        replyTo ! TopicId(testUUID).asRight
+        replyTo ! FeedId(testUUID.toString()).asRight
         Behaviors.same
       case RegisterSubscriber(replyTo) => Behaviors.same
 

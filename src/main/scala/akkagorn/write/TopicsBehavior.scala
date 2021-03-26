@@ -1,7 +1,9 @@
 package akkagorn.write
 
-class TopicsBehavior(context: ActorContext[AkkagornCommand])
-    extends AbstractBehavior[AkkagornCommand](context) {
+import akka.actor.typed.Behavior
+import akka.actor.typed.scaladsl.ActorContext
 
-      override def onMessage(msg: AkkagornCommand): Behavior[TopicsCommand] = 
+class TopicsBehavior(context: ActorContext[AkkagornCommand])
+    extends AkkagornBehaviorRoot(context) {
+  override def onMessage(msg: AkkagornCommand): Behavior[AkkagornCommand] = ???
 }

@@ -1,7 +1,7 @@
 package akkagorn.write
 
 import akka.actor.typed.ActorRef
-import akkagorn.model.AkkagornFailure._
+import akkagorn.model.failure.AkkagornFailure._
 import akkagorn.model._
 
 sealed trait AkkagornCommand
@@ -12,8 +12,8 @@ object AkkagornCommand {
 
   // Management
   final case class CreateTopic(
-      name: TopicName,
-      replyTo: ActorRef[Either[CreateTopicFailure, TopicId]]
+      name: FeedCategory,
+      replyTo: ActorRef[Either[CreateTopicFailure, FeedId]]
   ) extends ManagementCommand
 
   // Whatever

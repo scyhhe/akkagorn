@@ -9,20 +9,11 @@ import sttp.model.StatusCode
 class ManagementController(service: ManagementService)(implicit
     ec: ExecutionContext
 ) {
-  def createTopic(
-      request: CreateTopicRequest
-  ): Future[Either[(StatusCode, ApiError), CreateTopicResponse]] = {
-    // authorize
+  def createFeedCategory(
+      request: CreateFeedCategoryRequest
+  ): Future[Either[(StatusCode, ApiError), Unit]] = ???
 
-    EitherT(service.createTopic(request.name))
-      .bimap(
-        _ =>
-          (
-            StatusCode.BadRequest,
-            ApiError(s"Could not create Topic=${request.name}")
-          ),
-        topicId => CreateTopicResponse(topicId, request.name)
-      )
-      .value
-  }
+  def createFeed(
+      request: CreateFeedRequest
+  ): Future[Either[(StatusCode, ApiError), Unit]] = ???
 }
