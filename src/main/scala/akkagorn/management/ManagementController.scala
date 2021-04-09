@@ -1,6 +1,7 @@
-package akkagorn.server
+package akkagorn.management
 
-import akkagorn.api._
+import akkagorn.management.api.model._
+import akkagorn.management.api.ApiError
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 import sttp.model.StatusCode

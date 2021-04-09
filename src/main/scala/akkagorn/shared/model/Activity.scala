@@ -1,4 +1,4 @@
-package akkagorn.model
+package akkagorn.shared.model
 
 object Activity {
   final case class Actor(name: String) // who performed it
