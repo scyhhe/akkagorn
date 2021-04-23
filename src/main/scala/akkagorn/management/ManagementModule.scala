@@ -1,20 +1,16 @@
 package akkagorn.management
 
-import akkagorn.shared.model._
 import akkagorn.shared.write.AkkagornCommand
 
 import akka.http.scaladsl.server.Route
 import sttp.tapir.server.akkahttp._
 
-import akkagorn.management.api.model._
 import akkagorn.management.{ManagementService, ManagementController}
 import akkagorn.management.api.Endpoints
 
 import com.typesafe.config.Config
 import akka.actor.typed.ActorSystem
 import scala.concurrent.ExecutionContext
-
-import java.util.UUID
 
 class ManagementModule(config: Config)(implicit
     system: ActorSystem[AkkagornCommand],
@@ -24,30 +20,16 @@ class ManagementModule(config: Config)(implicit
   val managementController = new ManagementController(managementService)
 
   val createFeedCategoryRoute: Route =
-    AkkaHttpServerInterpreter.toRoute(Endpoints.createFeedCategory)(_ =>
-      managementController.createFeedCategory(
-        CreateFeedCategoryRequest(
-          FeedCategory(
-            FeedCategoryId(UUID.randomUUID()),
-            TenantId(UUID.randomUUID()),
-            Slug("test-category")
-          )
-        )
-      )
+    AkkaHttpServerInterpreter.toRoute(
+      Endpoints.createFeedCategory
+        .serverLogic(managementController.createFeedCategory)
     )
 
   val createFeedRoute: Route =
-    AkkaHttpServerInterpreter.toRoute(Endpoints.createFeed)(_ =>
-      managementController.createFeed(
-        CreateFeedRequest(
-          FeedId("test"),
-          FeedCategory(
-            FeedCategoryId(UUID.randomUUID()),
-            TenantId(UUID.randomUUID()),
-            Slug("test-category")
-          )
-        )
-      )
+    AkkaHttpServerInterpreter.toRoute(
+      Endpoints.createFeed.serverLogic { case (slug, req) =>
+        managementController.createFeed(req)
+      }
     )
 
 }

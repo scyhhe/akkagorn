@@ -1,5 +1,5 @@
 package akkagorn.management.api.model
 
-import akkagorn.shared.model.FeedCategory
+import akkagorn.shared.model.{TenantId, Slug}
 
-final case class CreateFeedCategoryRequest(name: FeedCategory)
+final case class CreateFeedCategoryRequest(tenantId: TenantId, name: Slug)

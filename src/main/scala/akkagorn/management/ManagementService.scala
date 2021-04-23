@@ -1,14 +1,30 @@
 package akkagorn.management
 
-import akkagorn.shared.write.AkkagornCommand
-import akka.actor.typed.{ActorRef, ActorSystem}
 import akka.util.Timeout
+import akka.actor.typed.scaladsl.AskPattern._
+import akka.actor.typed.{ActorRef, ActorSystem}
 import scala.concurrent.duration._
+import scala.concurrent.Future
+import akkagorn.shared.model.failure.Failure._
+import akkagorn.shared.model._
+import akkagorn.shared.write.ManagementCommand
+import akkagorn.shared.write.AkkagornCommand
 
 class ManagementService(actor: ActorRef[AkkagornCommand])(implicit
     system: ActorSystem[AkkagornCommand]
 ) {
   private implicit val timeout: Timeout = Timeout(30.seconds)
+
+  def createFeedCategory(
+      tenantId: TenantId,
+      name: Slug
+  ): Future[Either[CreateFeedCategoryFailure, Unit]] = {
+    val cmd =
+      (actorRef: ActorRef[
+        Either[CreateFeedCategoryFailure, Unit]
+      ]) => ManagementCommand.CreateFeedCategory(name, tenantId, actorRef)
+    actor.ask(cmd)
+  }
 
   // val userCategory = FeedCategory("user")
   // val micheleUserFeed = Feed(userCategory, FeedId("Michele"))
