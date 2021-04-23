@@ -1,16 +1,21 @@
 package akkagorn.shared.model
 
 import io.circe._
-// import io.circe.generic.semiauto._
 import shapeless.Unwrapped
+import java.util.UUID
 
 object Encoding {
-  implicit def encodeAnyVal[W, U](implicit
-      ev: W <:< AnyVal,
-      unwrapped: Unwrapped.Aux[W, U],
-      encoderUnwrapped: Encoder[U]
-  ): Encoder[W] = {
-    Encoder.instance[W](v => encoderUnwrapped(unwrapped.unwrap(v)))
+  implicit def decodeAnyVal[T, U](implicit
+      ev: T <:< AnyVal,
+      unwrapped: Unwrapped.Aux[T, U],
+      decoder: Decoder[U]
+  ): Decoder[T] = Decoder.instance[T] { cursor =>
+    decoder(cursor).map(value => unwrapped.wrap(value))
   }
 
+  implicit val decodeTenantId: Decoder[TenantId] = decodeAnyVal[TenantId, UUID]
+  implicit val decodeSlug: Decoder[Slug] = decodeAnyVal[Slug, String]
+  implicit val feedId: Decoder[FeedId] = decodeAnyVal[FeedId, String]
+  implicit val feedCategoryId: Decoder[FeedCategoryId] =
+    decodeAnyVal[FeedCategoryId, UUID]
 }

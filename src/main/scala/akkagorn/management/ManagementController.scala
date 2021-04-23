@@ -15,7 +15,6 @@ class ManagementController(service: ManagementService)(implicit
   def createFeedCategory(
       request: CreateFeedCategoryRequest
   ): Future[Either[(StatusCode, ApiError), Unit]] = {
-    // auth
     EitherT(service.createFeedCategory(request.tenantId, request.name))
       .leftMap(_ => ApiErrors.badRequest(msg = "This ain't right, dawg"))
       .map(_ => println(s"Created FeedCategory from request=$request"))
@@ -24,5 +23,11 @@ class ManagementController(service: ManagementService)(implicit
 
   def createFeed(
       request: CreateFeedRequest
-  ): Future[Either[(StatusCode, ApiError), Unit]] = ???
+  ): Future[Either[(StatusCode, ApiError), Unit]] = {
+    EitherT
+      .pure[Future, (StatusCode, ApiError)](
+        println(s"Created FeedCategory from request=$request")
+      )
+      .value
+  }
 }

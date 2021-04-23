@@ -10,6 +10,8 @@ import akkagorn.shared.model.Slug
 import akkagorn.management.api.model._
 import akkagorn.common.Codecs._
 
+import akkagorn.shared.model.Encoding._
+
 object Endpoints {
 
   private val baseEndpoint =
