@@ -11,11 +11,14 @@ import akkagorn.management.api.model._
 import akkagorn.common.Codecs._
 
 import akkagorn.shared.model.Encoding._
+import akkagorn.shared.model.TenantId
 
 object Endpoints {
 
   private val baseEndpoint =
-    endpoint.in("api").errorOut(statusCode.and(jsonBody[ApiError]))
+    endpoint
+      .in("api" / "tenants" / path[TenantId])
+      .errorOut(statusCode.and(jsonBody[ApiError]))
 
   val createFeedCategory =
     baseEndpoint.post

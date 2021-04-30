@@ -32,7 +32,8 @@ object AkkagornModule extends App {
       concat(
         managementModule.createFeedCategoryRoute,
         managementModule.createFeedRoute,
-        activityFeedModule.streamActivities
+        activityFeedModule.streamActivities,
+        activityFeedModule.pushActivity
       )
 
     val bindingFuture =

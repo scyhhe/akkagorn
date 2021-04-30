@@ -20,11 +20,11 @@ class AkkagornBehaviorRoot[AkkagornCommand](
 
   override def onMessage(msg: AkkagornCommand): Behavior[AkkagornCommand] =
     msg match {
-      case CreateFeed(categoryId, feedId, replyTo) =>
+      case CreateFeed(tenantId, categoryId, feedId, replyTo) =>
         replyTo ! ().asRight
         Behaviors.same
 
-      case CreateFeedCategory(identifier, tenantId, replyTo) =>
+      case CreateFeedCategory(tenantId, identifier, replyTo) =>
         replyTo ! ().asRight
         // replyTo ! Failure.CreateFeedCategoryFailure.SomeFailure.asLeft
         Behaviors.same

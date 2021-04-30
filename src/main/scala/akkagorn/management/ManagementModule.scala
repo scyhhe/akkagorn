@@ -22,12 +22,14 @@ class ManagementModule(config: Config)(implicit
   val createFeedCategoryRoute: Route =
     AkkaHttpServerInterpreter.toRoute(
       Endpoints.createFeedCategory
-        .serverLogic(managementController.createFeedCategory)
+        .serverLogic { case (tenantId, req) =>
+          managementController.createFeedCategory(tenantId, req)
+        }
     )
 
   val createFeedRoute: Route =
     AkkaHttpServerInterpreter.toRoute(
-      Endpoints.createFeed.serverLogic { case (slug, req) =>
+      Endpoints.createFeed.serverLogic { case (tenantId, slug, req) =>
         managementController.createFeed(req)
       }
     )

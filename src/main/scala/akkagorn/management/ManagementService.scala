@@ -22,7 +22,20 @@ class ManagementService(actor: ActorRef[AkkagornCommand])(implicit
     val cmd =
       (actorRef: ActorRef[
         Either[CreateFeedCategoryFailure, Unit]
-      ]) => ManagementCommand.CreateFeedCategory(name, tenantId, actorRef)
+      ]) => ManagementCommand.CreateFeedCategory(tenantId, name, actorRef)
+    actor.ask(cmd)
+  }
+
+  def createFeed(
+      tenantId: TenantId,
+      feedId: FeedId,
+      feedCategoryId: FeedCategoryId
+  ): Future[Either[CreateFeedFailure, Unit]] = {
+    val cmd =
+      (actorRef: ActorRef[
+        Either[CreateFeedFailure, Unit]
+      ]) =>
+        ManagementCommand.CreateFeed(tenantId, feedCategoryId, feedId, actorRef)
     actor.ask(cmd)
   }
 

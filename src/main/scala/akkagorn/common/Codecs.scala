@@ -1,13 +1,11 @@
 package akkagorn.common
 
-// import sttp.tapir.generic.auto._
-// import sttp.tapir.json.circe._
-// import io.circe.generic.auto._
-
 import akkagorn.shared.model.{Slug, FeedId}
 import sttp.tapir.Codec
+import akkagorn.shared.model.TenantId
 
 object Codecs {
   implicit val feedIdCodec = Codec.string.map(FeedId)(_.value)
+  implicit val tenantIdCodec = Codec.uuid.map(TenantId)(_.value)
   implicit val slugCodec = Codec.string.map(Slug)(_.value)
 }

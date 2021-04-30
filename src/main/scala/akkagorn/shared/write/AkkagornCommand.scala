@@ -13,11 +13,12 @@ object AkkagornCommand {
 
 object ManagementCommand {
   final case class CreateFeedCategory(
-      identifier: Slug,
       tenantId: TenantId,
+      identifier: Slug,
       replyTo: ActorRef[Either[CreateFeedCategoryFailure, Unit]]
   ) extends AkkagornCommand.ManagementCommand
   final case class CreateFeed(
+      tenantId: TenantId,
       category: FeedCategoryId,
       id: FeedId,
       replyTo: ActorRef[Either[CreateFeedFailure, Unit]]
